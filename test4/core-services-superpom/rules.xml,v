@@ -1,0 +1,40 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2015.09.02.16.23.07;	author aej7;	state Exp;
+branches;
+next	;
+commitid	7b5b55e7226b4567;
+
+
+desc
+@@
+
+
+1.1
+log
+@Updated plugin versions
+@
+text
+@<ruleset comparisonMethod="maven"
+         xmlns="http://mojo.codehaus.org/versions-maven-plugin/rule/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://mojo.codehaus.org/versions-maven-plugin/rule/2.0.0 http://www.mojohaus.org/versions-maven-plugin/xsd/rule-2.0.0.xsd">
+  <rules>
+  
+  	<!-- 8/21/2015 Team managing Sonar updated the ruleset, newer version of 3.x maven-pmd-plugin is now needed -->
+  	<!-- NO LONGER NEEDED - Need to stay on the 2.x branch for compatibility of rules in Sonar -->
+  	<!-- 
+    <rule groupId="org.apache.maven.plugins" artifactId="maven-pmd-plugin">
+    	<ignoreVersions>
+    		
+    		<ignoreVersion type="regex">[^2]\..*</ignoreVersion>
+    	</ignoreVersions>
+    </rule>
+     -->
+  </rules>
+</ruleset>@

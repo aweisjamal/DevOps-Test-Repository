@@ -1,0 +1,29 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2016.02.08.22.08.07;	author aej7;	state Exp;
+branches;
+next	;
+commitid	48956b911c74567;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial commit
+@
+text
+@<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.moneygram.pmd</groupId>
+  <artifactId>core-pmd</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+</project>@

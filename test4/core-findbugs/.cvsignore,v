@@ -1,0 +1,25 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2016.02.08.22.23.57;	author adp2;	state Exp;
+branches;
+next	;
+commitid	1e5056b9157d4567;
+
+
+desc
+@@
+
+
+1.1
+log
+@cvs ignore
+@
+text
+@target
+@

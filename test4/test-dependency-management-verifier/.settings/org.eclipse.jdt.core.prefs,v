@@ -1,0 +1,29 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2016.02.08.22.22.19;	author aej7;	state Exp;
+branches;
+next	;
+commitid	1c9756b9151b4567;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial commit
+@
+text
+@eclipse.preferences.version=1
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
+org.eclipse.jdt.core.compiler.compliance=1.5
+org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning
+org.eclipse.jdt.core.compiler.source=1.5
+@

@@ -1,0 +1,28 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2016.02.08.22.09.41;	author aej7;	state Exp;
+branches;
+next	;
+commitid	8c256b912254567;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial complete
+@
+text
+@activeProfiles=
+eclipse.preferences.version=1
+resolveWorkspaceProjects=true
+version=1
+@

@@ -1,0 +1,25 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2016.02.08.22.24.21;	author adp2;	state Exp;
+branches;
+next	;
+commitid	1edd56b915954567;
+
+
+desc
+@@
+
+
+1.1
+log
+@added target to cvs ignore
+@
+text
+@target
+@

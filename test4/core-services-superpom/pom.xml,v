@@ -1,0 +1,565 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2016.02.08.22.02.04;	author aej7;	state Exp;
+branches;
+next	1.2;
+commitid	784056b9105c4567;
+
+1.2
+date	2015.09.02.16.23.07;	author aej7;	state Exp;
+branches;
+next	1.1;
+commitid	7b5b55e7226b4567;
+
+1.1
+date	2015.08.19.21.07.27;	author aej7;	state Exp;
+branches;
+next	;
+commitid	5be255d4f00f4567;
+
+
+desc
+@@
+
+
+1.3
+log
+@-Added build timestamps to manifests
+-Moved static analysis to jar files rather than reading from Sonar
+@
+text
+@<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.mg.core-services</groupId>
+	<artifactId>core-services-superpom</artifactId>
+	<version>1.0.0-BETA-001-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<prerequisites>
+		<maven>3.0.4</maven>
+	</prerequisites>
+
+	<properties>
+		<maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss Z</maven.build.timestamp.format>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<dependency.locations.enabled>false</dependency.locations.enabled>
+
+		<!-- Plugin Versions -->
+		<cxf-xjc-plugin.version>3.0.4</cxf-xjc-plugin.version>
+		<cxf-codegen-plugin.version>3.1.2</cxf-codegen-plugin.version>
+		<maven-jar-plugin.version>2.6</maven-jar-plugin.version>
+		<maven-war-plugin.version>2.6</maven-war-plugin.version>
+		<maven-ejb-plugin.version>2.5.1</maven-ejb-plugin.version>
+		<maven-source-plugin.version>2.4</maven-source-plugin.version>
+		<maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
+
+		<!-- Reporting Plugin Versions -->
+		<maven-jxr-plugin.version>2.5</maven-jxr-plugin.version>
+		<findbugs-maven-plugin.version>3.0.2</findbugs-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.7.5.201505241946</jacoco-maven-plugin.version>
+		<maven-pmd-plugin.version>3.5</maven-pmd-plugin.version>
+		<maven-surefire-report-plugin.version>2.18.1</maven-surefire-report-plugin.version>
+
+		<!-- Quality Threholds -->
+		<cov.class.cr>1.00</cov.class.cr>
+		<cov.method.cr>1.00</cov.method.cr>
+		<cov.instruction.cr>0.80</cov.instruction.cr>
+		<cov.branch.cr>0.85</cov.branch.cr>
+
+		<!-- <pmd.ruleset><![CDATA[https://jiraprod:9000/profiles/export?format=pmd&language=java&name=Moneygram-Sonar%2520way%2520with%2520Findbugs%2520and%2520PMD]]></pmd.ruleset> -->
+		<pmd.failurePriority>2</pmd.failurePriority>
+
+		<!-- <findbugs.ruleset><![CDATA[https://jiraprod:9000/profiles/export?format=findbugs&language=java&name=Moneygram-Sonar%2520way%2520with%2520Findbugs%2520and%2520PMD]]></findbugs.ruleset> -->
+		<pit.rootTestPackage>${pit.rootPackage}</pit.rootTestPackage>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven-javadoc-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven-source-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>cxf-codegen-plugin</artifactId>
+					<version>${cxf-codegen-plugin.version}</version>
+					<configuration>
+						<defaultOptions>
+							<extraargs>
+								<extraarg>-xjc-Xdv</extraarg>
+								<extraarg>-xjc-enableIntrospection</extraarg>
+							</extraargs>
+						</defaultOptions>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.cxf.xjcplugins</groupId>
+							<artifactId>cxf-xjc-dv</artifactId>
+							<version>${cxf-xjc-plugin.version}</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>cxf-xjc-plugin</artifactId>
+					<version>${cxf-xjc-plugin.version}</version>
+					<configuration>
+						<extensions>
+							<extension>org.apache.cxf.xjcplugins:cxf-xjc-dv:${cxf-xjc-plugin.version}</extension>
+						</extensions>
+					</configuration>
+					<executions>
+						<execution>
+							<id>single-xsd</id>
+							<configuration>
+								<xsdOptions>
+									<xsdOption>
+										<xsd>${xsd1}</xsd>
+										<extension>true</extension>
+										<extensionArgs>
+											<extensionArg>-Xdv</extensionArg>
+											<extensionArg>-enableIntrospection</extensionArg>
+										</extensionArgs>
+									</xsdOption>
+								</xsdOptions>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>2.8</version>
+				</plugin>
+				<plugin>
+					<groupId>org.pitest</groupId>
+					<artifactId>pitest-maven</artifactId>
+					<version>1.1.5</version>
+					<configuration>
+						<targetClasses>
+							<param>${pit.rootPackage}</param>
+						</targetClasses>
+						<targetTests>
+							<param>${pit.rootTestPackage}</param>
+						</targetTests>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-ear-plugin</artifactId>
+					<version>2.10.1</version>
+					<configuration>
+						<version>6</version>
+						<fileNameMapping>no-version</fileNameMapping>
+						<generateApplicationXml>false</generateApplicationXml>
+						<defaultLibBundleDir>lib</defaultLibBundleDir>
+						<archive>
+							<manifest>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+							<manifestEntries>
+								<Build-Time>${maven.build.timestamp}</Build-Time>
+								<scm>${project.scm.connection}</scm>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-ejb-plugin</artifactId>
+					<version>${maven-ejb-plugin.version}</version>
+					<configuration>
+						<ejbVersion>3.1</ejbVersion>
+						<archive>
+							<manifest>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+							<manifestEntries>
+								<Build-Time>${maven.build.timestamp}</Build-Time>
+								<scm>${project.scm.connection}</scm>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${maven-war-plugin.version}</version>
+					<configuration>
+						<warName>${project.artifactId}</warName>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+						<archive>
+							<manifest>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+							<manifestEntries>
+								<Build-Time>${maven.build.timestamp}</Build-Time>
+								<scm>${project.scm.connection}</scm>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven-jar-plugin.version}</version>
+					<configuration>
+						<archive>
+							<manifest>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+							<manifestEntries>
+								<Build-Time>${maven.build.timestamp}</Build-Time>
+								<scm>${project.scm.connection}</scm>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${jacoco-maven-plugin.version}</version>
+					<configuration>
+						<excludes>
+							<exclude>org/apache/maven/*</exclude>
+							<exclude>org/hamcrest/*</exclude>
+							<exclude>org/junit/*</exclude>
+							<exclude>org/mockito/*</exclude>
+							<exclude>org/easymock/*</exclude>
+						</excludes>
+						<rules>
+							<rule>
+								<element>PACKAGE</element>
+								<limits>
+									<limit>
+										<counter>CLASS</counter>
+										<value>COVEREDRATIO</value>
+										<minimum>${cov.class.cr}</minimum>
+									</limit>
+									<limit>
+										<counter>METHOD</counter>
+										<value>COVEREDRATIO</value>
+										<minimum>${cov.method.cr}</minimum>
+									</limit>
+								</limits>
+							</rule>
+							<rule>
+								<element>CLASS</element>
+								<limits>
+									<limit>
+										<counter>INSTRUCTION</counter>
+										<value>COVEREDRATIO</value>
+										<minimum>${cov.instruction.cr}</minimum>
+									</limit>
+									<limit>
+										<counter>BRANCH</counter>
+										<value>COVEREDRATIO</value>
+										<minimum>${cov.branch.cr}</minimum>
+									</limit>
+								</limits>
+							</rule>
+						</rules>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jxr-plugin</artifactId>
+					<version>${maven-jxr-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-pmd-plugin</artifactId>
+					<version>${maven-pmd-plugin.version}</version>
+					<configuration>
+						<targetJdk>${maven.compiler.target}</targetJdk>
+						<outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
+						<rulesets>
+							<ruleset>/core-pmd.xml</ruleset>
+						</rulesets>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>com.moneygram.pmd</groupId>
+							<artifactId>core-pmd</artifactId>
+							<version>1.0.0-SNAPSHOT</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>${findbugs-maven-plugin.version}</version>
+					<configuration>
+						<includeFilterFile>/core-findbugs.xml</includeFilterFile>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<extensions>
+			<extension>
+				<groupId>com.moneygram.pmd</groupId>
+				<artifactId>core-pmd</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</extension>
+			<extension>
+				<groupId>core.moneygram.findbugs</groupId>
+				<artifactId>core-findbugs</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</extension>
+		</extensions>
+	</build>
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>quality</id>
+			<!-- This profile is used for reporting and should attempt to not fail 
+				when performing a build. Typical command line: -->
+			<!-- mvn clean install site -P quality -->
+			<properties>
+				<maven.test.failure.ignore>true</maven.test.failure.ignore>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>unit-jacoco-prepare-agent</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<reporting>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>${jacoco-maven-plugin.version}</version>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jxr-plugin</artifactId>
+						<version>${maven-jxr-plugin.version}</version>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-pmd-plugin</artifactId>
+						<version>${maven-pmd-plugin.version}</version>
+						<configuration>
+							<targetJdk>${maven.compiler.target}</targetJdk>
+							<outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
+							<rulesets>
+								<ruleset>/core-pmd.xml</ruleset>
+							</rulesets>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>findbugs-maven-plugin</artifactId>
+						<version>${findbugs-maven-plugin.version}</version>
+						<configuration>
+							<includeFilterFile>/core-findbugs.xml</includeFilterFile>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-report-plugin</artifactId>
+						<version>${maven-surefire-report-plugin.version}</version>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>${maven-javadoc-plugin.version}</version>
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>
+		<profile>
+			<id>ci</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>unit-jacoco-prepare-agent</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>unit-jacoco-report</id>
+								<phase>test</phase>
+								<goals>
+									<goal>report</goal>
+									<goal>check</goal>
+								</goals>
+								<configuration>
+									<haltOnFailure>true</haltOnFailure>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>findbugs-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-pmd-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>pit</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-maven</artifactId>
+						<executions>
+							<execution>
+								<phase>test</phase>
+								<goals>
+									<goal>mutationCoverage</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>@
+
+
+1.2
+log
+@Updated plugin versions
+@
+text
+@d14 1
+d27 2
+d43 1
+a43 1
+		<pmd.ruleset><![CDATA[http://jiraprod:9000/profiles/export?format=pmd&language=java&name=Moneygram-Sonar%2520way%2520with%2520Findbugs%2520and%2520PMD]]></pmd.ruleset>
+d46 1
+a46 2
+		<findbugs.ruleset><![CDATA[http://jiraprod:9000/profiles/export?format=findbugs&language=java&name=Moneygram-Sonar%2520way%2520with%2520Findbugs%2520and%2520PMD]]></findbugs.ruleset>
+
+d54 8
+d126 19
+d164 2
+d251 1
+a251 1
+							<ruleset>${pmd.ruleset}</ruleset>
+d254 7
+d267 1
+a267 1
+						<includeFilterFile>${findbugs.ruleset}</includeFilterFile>
+d272 13
+a285 1
+
+d288 27
+d343 1
+a343 1
+						<version>${jacoco-maven-plugin}</version>
+d351 1
+d358 1
+a358 1
+								<ruleset>${pmd.ruleset}</ruleset>
+d367 1
+a367 1
+							<includeFilterFile>${findbugs.ruleset}</includeFilterFile>
+d375 5
+@
+
+
+1.1
+log
+@Initial upload
+@
+text
+@d6 1
+a6 1
+	<version>1.0.0-BETA-001</version>
+d21 5
+a25 1
+		<cxf-xjc-plugin.version>3.0.3</cxf-xjc-plugin.version>
+d29 1
+a29 1
+		<findbugs-maven-plugin.version>3.0.1</findbugs-maven-plugin.version>
+d31 1
+a31 1
+		<maven-pmd-plugin.version>2.7.1</maven-pmd-plugin.version>
+d54 16
+a69 1
+					<version>2.7.16</version>
+d78 1
+a78 1
+						</extensions>						
+d80 17
+d117 1
+a117 1
+					<version>2.3</version>
+d120 39
+d213 1
+@
+

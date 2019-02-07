@@ -1,0 +1,64 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2015.09.02.16.23.07;	author aej7;	state Exp;
+branches;
+next	;
+commitid	7b5b55e7226b4567;
+
+
+desc
+@@
+
+
+1.1
+log
+@Updated plugin versions
+@
+text
+@<project name="maven-utils">
+
+	<property name="versions-maven-plugin.version" value="2.2" />
+
+	<target name="update-parent" description="Updates to the latest parent">
+		<versions-maven-plugin goal="update-parent">
+
+		</versions-maven-plugin>
+	</target>
+
+	<target name="update-properties" description="Updates maven version properties to the latest">
+		<versions-maven-plugin goal="update-properties">
+		</versions-maven-plugin>
+	</target>
+
+	<macrodef name="mvn">
+		<element name="args" />
+
+		<sequential>
+			<exec executable="cmd">
+				<arg value="/C" />
+				<arg value="mvn" />
+				<args />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="versions-maven-plugin">
+		<attribute name="goal" />
+		<element name="pargs" optional="true" />
+		<sequential>
+			<mvn>
+				<args>
+					<arg value="org.codehaus.mojo:versions-maven-plugin:${versions-maven-plugin.version}:@@{goal}" />
+					<arg value="&quot;-Dmaven.version.rules=file:///${basedir}/rules.xml&quot;" />
+					<pargs />
+				</args>
+			</mvn>
+		</sequential>
+	</macrodef>
+</project>@

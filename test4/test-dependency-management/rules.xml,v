@@ -1,0 +1,55 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2017.01.21.18.51.10;	author aej7;	state Exp;
+branches;
+next	1.1;
+commitid	4d205883ad9e4567;
+
+1.1
+date	2016.02.08.22.21.28;	author aej7;	state Exp;
+branches;
+next	;
+commitid	1a7356b914e84567;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@<ruleset comparisonMethod="maven"
+         xmlns="http://mojo.codehaus.org/versions-maven-plugin/rule/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://mojo.codehaus.org/versions-maven-plugin/rule/2.0.0 http://www.mojohaus.org/versions-maven-plugin/xsd/rule-2.0.0.xsd">
+  <rules>
+  	<!-- 
+    <rule groupId="org.mockito">
+    	<ignoreVersions>
+    		<ignoreVersion type="regex">[^1]\..*</ignoreVersion>
+    	</ignoreVersions>
+    </rule>
+     -->
+  </rules>
+</ruleset>@
+
+
+1.1
+log
+@initial commit
+@
+text
+@d5 1
+a7 1
+    		<!-- Stay on the latest 1.x branch -->
+d11 1
+@
+

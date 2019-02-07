@@ -1,0 +1,27 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2016.02.08.22.02.04;	author aej7;	state Exp;
+branches;
+next	;
+commitid	784056b9105c4567;
+
+
+desc
+@@
+
+
+1.1
+log
+@-Added build timestamps to manifests
+-Moved static analysis to jar files rather than reading from Sonar
+@
+text
+@eclipse.preferences.version=1
+encoding/<project>=UTF-8
+@
